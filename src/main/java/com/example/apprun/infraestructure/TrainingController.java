@@ -2,23 +2,34 @@ package com.example.apprun.infraestructure;
 
 import com.example.apprun.dto.TrainingRecordDto;
 import com.example.apprun.dto.TrainingRecordResponseDto;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
+import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @RestController
 public class TrainingController {
 
     @PostMapping("/training")
-    public TrainingRecordResponseDto create(@RequestBody TrainingRecordDto training) throws ParseException {
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date today = new Date();
-        return new TrainingRecordResponseDto(training.getDistance(), training.getTime(), formatter.parse(formatter.format(today)));
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public String create(@RequestBody TrainingRecordDto training) throws ParseException, JsonProcessingException {
+        String responseJson = "";
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            TrainingRecordResponseDto response = new TrainingRecordResponseDto(training.getDistance(), training.getTime(), "10-01-21");
+            responseJson = mapper.writeValueAsString(response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return responseJson;
+    }
+
+    @GetMapping("/")
+    public String getAll() {
+        return "App Run";
     }
 
 
