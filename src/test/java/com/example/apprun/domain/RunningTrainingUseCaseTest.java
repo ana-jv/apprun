@@ -4,19 +4,16 @@ import com.example.apprun.domain.model.TrainingRecord;
 import com.example.apprun.domain.primary.RunningTrainingUseCase;
 import com.example.apprun.domain.repository.TrainingRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.Mockito;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 public class RunningTrainingUseCaseTest {
 
-    @Mock
-    TrainingRepository repository;
+    TrainingRepository repository = Mockito.mock(TrainingRepository.class) ;
 
     RunningTrainingUseCase runningTraining = new RunningTrainingUseCase(repository);
 
