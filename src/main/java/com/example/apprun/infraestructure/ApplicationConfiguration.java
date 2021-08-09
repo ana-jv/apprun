@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationConfiguration {
 
     @Bean
-    public TrainingUseCase trainingUseCase() {
-        return new RunningTrainingUseCase();
+    public TrainingUseCase trainingUseCase(TrainingRepository repository) {
+        return new RunningTrainingUseCase(repository);
     }
 
     @Bean
